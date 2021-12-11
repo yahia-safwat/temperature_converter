@@ -84,57 +84,61 @@ class _HomeScreenState extends State<HomeScreen> {
         },
         child: const Icon(Icons.clear),
       ),
-      body: Container(
+      body: Padding(
         padding: const EdgeInsets.all(20.0),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  buildDropdown(
-                    selectedTemp: selectedTemp1,
-                    temperatures: temperatures,
-                    onChanged: (value) {
-                      setState(() {
-                        selectedTemp1 = value.toString();
-                      });
-                    },
+        child: Center(
+          child: SingleChildScrollView(
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      buildDropdown(
+                        selectedTemp: selectedTemp1,
+                        temperatures: temperatures,
+                        onChanged: (value) {
+                          setState(() {
+                            selectedTemp1 = value.toString();
+                          });
+                        },
+                      ),
+                      buildSizedBox(sizedBoxHeight),
+                      buildTextFormField(
+                        context,
+                        tempController: temp1Controller,
+                        selectedTemp: selectedTemp1,
+                      ),
+                    ],
                   ),
-                  buildSizedBox(sizedBoxHeight),
-                  buildTextFormField(
-                    context,
-                    tempController: temp1Controller,
-                    selectedTemp: selectedTemp1,
+                ),
+                buildVerticalSizedBox(20),
+                Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      buildDropdown(
+                        selectedTemp: selectedTemp2,
+                        temperatures: temperatures,
+                        onChanged: (value) {
+                          setState(() {
+                            selectedTemp2 = value.toString();
+                          });
+                        },
+                      ),
+                      buildSizedBox(sizedBoxHeight),
+                      buildTextFormField(
+                        context,
+                        tempController: temp2Controller,
+                        selectedTemp: selectedTemp2,
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-            buildVerticalSizedBox(20),
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  buildDropdown(
-                    selectedTemp: selectedTemp2,
-                    temperatures: temperatures,
-                    onChanged: (value) {
-                      setState(() {
-                        selectedTemp2 = value.toString();
-                      });
-                    },
-                  ),
-                  buildSizedBox(sizedBoxHeight),
-                  buildTextFormField(
-                    context,
-                    tempController: temp2Controller,
-                    selectedTemp: selectedTemp2,
-                  ),
-                ],
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );
