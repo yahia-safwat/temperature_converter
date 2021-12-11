@@ -1,17 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:temperature_converter/business/temp_calculator.dart';
 
-InputDecoration getTextFieldWithCalendarIconDecoration(BuildContext context) {
+InputDecoration getTextFormFieldDecoration(
+  BuildContext context, {
+  required String selectedTemp,
+}) {
   return InputDecoration(
-    enabledBorder: OutlineInputBorder(
-      borderSide: BorderSide(
-        color: Theme.of(context).primaryColor,
-      ),
-    ),
-    border: OutlineInputBorder(
-        borderSide: BorderSide(color: Theme.of(context).primaryColor)),
-    suffixIcon: Icon(
-      Icons.date_range,
-      color: Theme.of(context).primaryColor,
-    ),
+    border: InputBorder.none,
+    suffixText: TempCalc.getSuffixText(selectedTemp),
   );
 }

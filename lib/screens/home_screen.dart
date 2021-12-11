@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:temperature_converter/functions.dart';
+import 'package:flutter/services.dart';
+import 'package:temperature_converter/business/temp_calculator.dart';
+import 'package:temperature_converter/shared/components/components.dart';
+import 'package:temperature_converter/shared/components/constants.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -14,10 +17,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
   bool isTemp1 = true;
 
-  List<String> temperatures = ['Celsius', 'Fahrenheit', 'Kelvan'];
+  String selectedTemp1 = 'Celsius', selectedTemp2 = 'Fahrenheit';
 
-  var selectedTemp1 = 'Celsius';
-  var selectedTemp2 = 'Fahrenheit';
+  List<String> temperatures = [
+    'Celsius',
+    'Fahrenheit',
+    'Kelvan',
+  ];
 
   temp1Listener() {
     setState(() {
@@ -26,7 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
       } catch (e) {
         throw Exception(e.toString());
       }
-      temp2 = convert(temp1, selectedTemp1, selectedTemp2);
+      temp2 = TempCalc.convert(temp1, selectedTemp1, selectedTemp2);
       if (isTemp1 == false) temp2Controller.text = temp2.toString();
       isTemp1 = false;
     });
@@ -39,7 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
       } catch (e) {
         throw Exception(e.toString());
       }
-      temp1 = convert(temp2, selectedTemp2, selectedTemp1);
+      temp1 = TempCalc.convert(temp2, selectedTemp2, selectedTemp1);
       if (isTemp1 == true) temp1Controller.text = temp1.toString();
       isTemp1 = true;
     });
@@ -60,71 +66,77 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Temperature Converter'),
-        centerTitle: true,
+        actions: [
+          IconButton(
+            onPressed: () {
+              SystemNavigator.pop();
+            },
+            icon: const Icon(Icons.exit_to_app),
+          ),
+        ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          setState(() {
+            temp1Controller.clear();
+            temp2Controller.clear();
+          });
+        },
+        child: const Icon(Icons.clear),
       ),
       body: Container(
-          padding: const EdgeInsets.all(20.0),
-          child: Row(
-            children: [
-              Expanded(
-                child: Column(
-                  children: [
-                    DropdownButton(
-                      onChanged: (value) {
-                        setState(() {
-                          selectedTemp1 = value.toString();
-                        });
-                      },
-                      value: selectedTemp1,
-                      items: (temperatures).map((temperature) {
-                        return DropdownMenuItem(
-                          child: Text(temperature),
-                          value: temperature,
-                        );
-                      }).toList(),
-                    ),
-                    TextFormField(
-                      controller: temp1Controller,
-                      onChanged: (value) {},
-                      keyboardType: TextInputType.number,
-                      decoration: InputDecoration(
-                        suffixText: getSuffixText(selectedTemp1),
-                      ),
-                    ),
-                  ],
-                ),
+        padding: const EdgeInsets.all(20.0),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  buildDropdown(
+                    selectedTemp: selectedTemp1,
+                    temperatures: temperatures,
+                    onChanged: (value) {
+                      setState(() {
+                        selectedTemp1 = value.toString();
+                      });
+                    },
+                  ),
+                  buildSizedBox(sizedBoxHeight),
+                  buildTextFormField(
+                    context,
+                    tempController: temp1Controller,
+                    selectedTemp: selectedTemp1,
+                  ),
+                ],
               ),
-              const SizedBox(width: 20),
-              Expanded(
-                child: Column(
-                  children: [
-                    DropdownButton(
-                      onChanged: (value) {
-                        setState(() {
-                          selectedTemp2 = value.toString();
-                        });
-                      },
-                      value: selectedTemp2,
-                      items: temperatures.map((temperature) {
-                        return DropdownMenuItem(
-                          child: Text(temperature),
-                          value: temperature,
-                        );
-                      }).toList(),
-                    ),
-                    TextFormField(
-                      controller: temp2Controller,
-                      onChanged: (value) {},
-                      keyboardType: TextInputType.number,
-                      decoration: InputDecoration(
-                        suffixText: getSuffixText(selectedTemp2),
-                      ),
-                    ),
-                  ],
-                ),
+            ),
+            buildVerticalSizedBox(20),
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  buildDropdown(
+                    selectedTemp: selectedTemp2,
+                    temperatures: temperatures,
+                    onChanged: (value) {
+                      setState(() {
+                        selectedTemp2 = value.toString();
+                      });
+                    },
+                  ),
+                  buildSizedBox(sizedBoxHeight),
+                  buildTextFormField(
+                    context,
+                    tempController: temp2Controller,
+                    selectedTemp: selectedTemp2,
+                  ),
+                ],
               ),
-            ],
-          )),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
