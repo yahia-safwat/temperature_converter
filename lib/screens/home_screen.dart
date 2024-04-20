@@ -5,13 +5,13 @@ import 'package:temperature_converter/shared/components/components.dart';
 import 'package:temperature_converter/shared/components/constants.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({super.key});
 
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  HomeScreenState createState() => HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class HomeScreenState extends State<HomeScreen> {
   double temp1 = 0.0;
   double temp2 = 0.0;
 

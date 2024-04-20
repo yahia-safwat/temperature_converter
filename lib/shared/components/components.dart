@@ -56,6 +56,7 @@ Widget buildDropdown({
         value: selectedTemp,
         items: (temperatures).map((temperature) {
           return DropdownMenuItem(
+            value: temperature,
             child: Center(
               child: Text(
                 temperature,
@@ -65,7 +66,6 @@ Widget buildDropdown({
                 ),
               ),
             ),
-            value: temperature,
           );
         }).toList(),
       ),
