@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:temperature_converter/business/temp_calculator.dart';
-import 'package:temperature_converter/shared/components/components.dart';
-import 'package:temperature_converter/shared/components/constants.dart';
+
+import '../../widgets/custom_text_form_field.dart';
+import '../../widgets/dropdown_item.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -66,14 +66,6 @@ class HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Temperature Converter'),
-        actions: [
-          IconButton(
-            onPressed: () {
-              SystemNavigator.pop();
-            },
-            icon: const Icon(Icons.exit_to_app),
-          ),
-        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -95,7 +87,7 @@ class HomeScreenState extends State<HomeScreen> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      buildDropdown(
+                      DropdownItem(
                         selectedTemp: selectedTemp1,
                         temperatures: temperatures,
                         onChanged: (value) {
@@ -104,21 +96,20 @@ class HomeScreenState extends State<HomeScreen> {
                           });
                         },
                       ),
-                      buildSizedBox(sizedBoxHeight),
-                      buildTextFormField(
-                        context,
+                      const SizedBox(height: 10),
+                      CustomTextFormField(
                         tempController: temp1Controller,
                         selectedTemp: selectedTemp1,
                       ),
                     ],
                   ),
                 ),
-                buildVerticalSizedBox(20),
+                const SizedBox(width: 20),
                 Expanded(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      buildDropdown(
+                      DropdownItem(
                         selectedTemp: selectedTemp2,
                         temperatures: temperatures,
                         onChanged: (value) {
@@ -127,9 +118,8 @@ class HomeScreenState extends State<HomeScreen> {
                           });
                         },
                       ),
-                      buildSizedBox(sizedBoxHeight),
-                      buildTextFormField(
-                        context,
+                      const SizedBox(height: 10),
+                      CustomTextFormField(
                         tempController: temp2Controller,
                         selectedTemp: selectedTemp2,
                       ),
