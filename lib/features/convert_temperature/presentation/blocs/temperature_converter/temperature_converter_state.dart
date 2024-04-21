@@ -21,18 +21,12 @@ class SelectedUnitsUpdated extends TemperatureConverterState {
 }
 
 class TemperatureConverterSuccess extends TemperatureConverterState {
-  final double enteredvalue;
-  final double convertedValue;
-  final String unit;
   final TemperatureField field;
 
   TemperatureConverterSuccess({
-    required this.enteredvalue,
-    required this.convertedValue,
-    required this.unit,
     required this.field,
   });
 
   @override
-  List<Object> get props => [enteredvalue, convertedValue, unit, field];
+  List<Object> get props => [field];
 }

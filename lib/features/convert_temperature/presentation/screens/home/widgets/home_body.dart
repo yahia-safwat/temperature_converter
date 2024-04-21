@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../../../core/enums/temperature_field.dart';
 import '../../../blocs/temperature_converter/temperature_converter_bloc.dart';
 import '../../../widgets/custom_text_form_field.dart';
 import '../../../widgets/dropdown_item.dart';
@@ -27,7 +28,7 @@ class HomeBody extends StatelessWidget {
                       children: [
                         DropdownItem(
                           selectedTemp: bloc.selectedUnit1,
-                          temperatures: temperatures,
+                          temperatures: bloc.temperatures,
                           onChanged: (value) {
                             // Dispatch event to update unit1
                             bloc.add(UpdateUnit1(value.toString()));
@@ -35,8 +36,16 @@ class HomeBody extends StatelessWidget {
                         ),
                         const SizedBox(height: 10.0),
                         CustomTextFormField(
-                          tempController: TextEditingController(),
-                          onChanged: (value) {},
+                          tempController: bloc.temp1Controller,
+                          onChanged: (value) {
+                            // Dispatch event to convert temperature
+                            bloc.add(ConvertTemperature(
+                              value: double.parse(value),
+                              fromUnit: bloc.selectedUnit1,
+                              toUnit: bloc.selectedUnit2,
+                              field: TemperatureField.leftToRight,
+                            ));
+                          },
                         ),
                       ],
                     ),
@@ -48,18 +57,24 @@ class HomeBody extends StatelessWidget {
                       children: [
                         DropdownItem(
                           selectedTemp: bloc.selectedUnit2,
-                          temperatures: temperatures,
+                          temperatures: bloc.temperatures,
                           onChanged: (value) {
                             // Dispatch event to update unit2
                             bloc.add(UpdateUnit2(value.toString()));
                           },
                         ),
-                        const SizedBox(
-                          height: 10,
-                        ),
+                        const SizedBox(height: 10),
                         CustomTextFormField(
-                          tempController: TextEditingController(),
-                          onChanged: (value) {},
+                          tempController: bloc.temp2Controller,
+                          onChanged: (value) {
+                            // Dispatch event to convert temperature
+                            bloc.add(ConvertTemperature(
+                              value: double.parse(value),
+                              fromUnit: bloc.selectedUnit2,
+                              toUnit: bloc.selectedUnit1,
+                              field: TemperatureField.rightToLeft,
+                            ));
+                          },
                         ),
                       ],
                     ),
@@ -73,5 +88,3 @@ class HomeBody extends StatelessWidget {
     );
   }
 }
-
-List<String> temperatures = ['Celsius', 'Fahrenheit', 'Kelvan'];

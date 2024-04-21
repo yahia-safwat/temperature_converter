@@ -25,13 +25,7 @@ class CustomTextFormField extends StatelessWidget {
       child: TextFormField(
         controller: tempController,
         keyboardType: TextInputType.number,
-        onChanged: (value) {
-          onChanged!(value);
-          // Move the cursor to the end of the text
-          tempController.selection = TextSelection.fromPosition(
-            TextPosition(offset: tempController.text.length),
-          );
-        },
+        onChanged: onChanged,
         decoration: InputStyles.customInputDecoration(
           border: InputBorder.none,
         ),

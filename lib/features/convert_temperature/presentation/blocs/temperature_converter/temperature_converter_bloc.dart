@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../core/enums/temperature_field.dart';
@@ -12,8 +13,13 @@ class TemperatureConverterBloc
     extends Bloc<TemperatureConverterEvent, TemperatureConverterState> {
   final ConvertTemperatureUseCase convertTemperatureUseCase;
 
+  List<String> temperatures = ['Celsius', 'Fahrenheit', 'Kelvin'];
+
   String selectedUnit1 = 'Celsius';
   String selectedUnit2 = 'Fahrenheit';
+
+  TextEditingController temp1Controller = TextEditingController();
+  TextEditingController temp2Controller = TextEditingController();
 
   var enteredValue = 0.0;
   var convertedValue = 0.0;
@@ -54,11 +60,14 @@ class TemperatureConverterBloc
     enteredValue = event.value;
     convertedValue = result.value;
 
-    emit(TemperatureConverterSuccess(
-      enteredvalue: event.value,
-      convertedValue: result.value,
-      unit: result.unit,
-      field: event.field,
-    ));
+    if (event.field == TemperatureField.leftToRight) {
+      temp1Controller.text = enteredValue.toString();
+      temp2Controller.text = convertedValue.toString();
+    } else {
+      temp1Controller.text = convertedValue.toString();
+      temp2Controller.text = enteredValue.toString();
+    }
+
+    emit(TemperatureConverterSuccess(field: event.field));
   }
 }
