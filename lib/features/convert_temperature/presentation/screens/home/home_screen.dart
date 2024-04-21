@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:temperature_converter/business/temp_calculator.dart';
 
 import '../../widgets/custom_text_form_field.dart';
 import '../../widgets/dropdown_item.dart';
@@ -19,37 +18,7 @@ class HomeScreenState extends State<HomeScreen> {
 
   String selectedTemp1 = 'Celsius', selectedTemp2 = 'Fahrenheit';
 
-  List<String> temperatures = [
-    'Celsius',
-    'Fahrenheit',
-    'Kelvan',
-  ];
-
-  temp1Listener() {
-    setState(() {
-      try {
-        temp1 = double.parse(temp1Controller.text);
-      } catch (e) {
-        throw Exception(e.toString());
-      }
-      temp2 = TempCalc.convert(temp1, selectedTemp1, selectedTemp2);
-      if (isTemp1 == false) temp2Controller.text = temp2.toString();
-      isTemp1 = false;
-    });
-  }
-
-  temp2Listener() {
-    setState(() {
-      try {
-        temp2 = double.parse(temp2Controller.text);
-      } catch (e) {
-        throw Exception(e.toString());
-      }
-      temp1 = TempCalc.convert(temp2, selectedTemp2, selectedTemp1);
-      if (isTemp1 == true) temp1Controller.text = temp1.toString();
-      isTemp1 = true;
-    });
-  }
+  List<String> temperatures = ['Celsius', 'Fahrenheit', 'Kelvan'];
 
   var temp1Controller = TextEditingController();
   var temp2Controller = TextEditingController();
@@ -57,8 +26,6 @@ class HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    temp1Controller.addListener(temp1Listener);
-    temp2Controller.addListener(temp2Listener);
   }
 
   @override
