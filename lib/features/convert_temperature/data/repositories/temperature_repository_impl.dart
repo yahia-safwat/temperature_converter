@@ -5,8 +5,8 @@ import '../../domain/repositories/temperature_repository.dart';
 
 class TemperatureRepositoryImpl implements TemperatureRepository {
   @override
-  Future<TemperatureEntity> convertTemperature(
-      double value, String fromUnit, String toUnit) async {
+  TemperatureEntity convertTemperature(
+      double value, String fromUnit, String toUnit) {
     try {
       final convertedValue =
           TemperatureConverter.convert(value, fromUnit, toUnit);

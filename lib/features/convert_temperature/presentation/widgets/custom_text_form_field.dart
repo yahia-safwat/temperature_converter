@@ -4,11 +4,11 @@ import '../../../../core/styles/custom_input_styles.dart';
 
 class CustomTextFormField extends StatelessWidget {
   final TextEditingController tempController;
-  final String selectedTemp;
+  final void Function(String)? onChanged;
   const CustomTextFormField({
     super.key,
     required this.tempController,
-    required this.selectedTemp,
+    this.onChanged,
   });
 
   @override
@@ -25,6 +25,13 @@ class CustomTextFormField extends StatelessWidget {
       child: TextFormField(
         controller: tempController,
         keyboardType: TextInputType.number,
+        onChanged: (value) {
+          onChanged!(value);
+          // Move the cursor to the end of the text
+          tempController.selection = TextSelection.fromPosition(
+            TextPosition(offset: tempController.text.length),
+          );
+        },
         decoration: InputStyles.customInputDecoration(
           border: InputBorder.none,
         ),

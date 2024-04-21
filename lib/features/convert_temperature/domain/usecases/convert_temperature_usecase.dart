@@ -6,13 +6,13 @@ class ConvertTemperatureUseCase {
 
   ConvertTemperatureUseCase({required this.repository});
 
-  Future<TemperatureEntity> call({
+  TemperatureEntity call({
     required double value,
     required String fromUnit,
     required String toUnit,
-  }) async {
+  }) {
     final convertedTemperature =
-        await repository.convertTemperature(value, fromUnit, toUnit);
+        repository.convertTemperature(value, fromUnit, toUnit);
     return convertedTemperature;
   }
 }

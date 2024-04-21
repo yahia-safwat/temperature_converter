@@ -1,0 +1,1 @@
+enum TemperatureField { leftToRight, rightToLeft }
