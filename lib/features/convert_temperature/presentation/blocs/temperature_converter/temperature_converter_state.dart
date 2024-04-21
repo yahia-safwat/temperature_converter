@@ -7,9 +7,17 @@ final class TemperatureConverterInitial extends TemperatureConverterState {
   List<Object> get props => [];
 }
 
-class TemperatureConverterLoading extends TemperatureConverterState {
+class SelectedUnitsUpdated extends TemperatureConverterState {
+  final String unit1;
+  final String unit2;
+
+  SelectedUnitsUpdated({
+    required this.unit1,
+    required this.unit2,
+  });
+
   @override
-  List<Object> get props => [];
+  List<Object> get props => [unit1, unit2];
 }
 
 class TemperatureConverterSuccess extends TemperatureConverterState {
