@@ -13,8 +13,15 @@ class HomeBody extends StatelessWidget {
   Widget build(BuildContext context) {
     final bloc = BlocProvider.of<TemperatureConverterBloc>(context);
 
+    TextEditingController temp1Controller = TextEditingController();
+    TextEditingController temp2Controller = TextEditingController();
+
     return BlocBuilder<TemperatureConverterBloc, TemperatureConverterState>(
       builder: (context, state) {
+        // Update text fields values
+        temp1Controller.text = bloc.leftFieldValue;
+        temp2Controller.text = bloc.rightFieldValue;
+
         return Padding(
           padding: const EdgeInsets.all(20.0),
           child: Center(
@@ -36,11 +43,11 @@ class HomeBody extends StatelessWidget {
                         ),
                         const SizedBox(height: 10.0),
                         CustomTextFormField(
-                          tempController: bloc.temp1Controller,
+                          tempController: temp1Controller,
                           onChanged: (value) {
                             // Dispatch event to convert temperature
                             bloc.add(ConvertTemperature(
-                              value: double.parse(value),
+                              value: value.toString(),
                               fromUnit: bloc.selectedUnit1,
                               toUnit: bloc.selectedUnit2,
                               conversionDirection:
@@ -66,11 +73,11 @@ class HomeBody extends StatelessWidget {
                         ),
                         const SizedBox(height: 10),
                         CustomTextFormField(
-                          tempController: bloc.temp2Controller,
+                          tempController: temp2Controller,
                           onChanged: (value) {
                             // Dispatch event to convert temperature
                             bloc.add(ConvertTemperature(
-                              value: double.parse(value),
+                              value: value.toString(),
                               fromUnit: bloc.selectedUnit2,
                               toUnit: bloc.selectedUnit1,
                               conversionDirection:

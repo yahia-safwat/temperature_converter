@@ -19,6 +19,16 @@ class HomeScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Temperature Converter'),
+          actions: [
+            Builder(builder: (context) {
+              return IconButton(
+                icon: const Icon(Icons.refresh),
+                onPressed: () {
+                  context.read<TemperatureConverterBloc>().add(ResetFields());
+                },
+              );
+            }),
+          ],
         ),
         body: const HomeBody(),
       ),

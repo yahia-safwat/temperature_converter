@@ -1,6 +1,4 @@
-import 'dart:async';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../core/enums/conversion_direction.dart';
@@ -18,56 +16,55 @@ class TemperatureConverterBloc
   String selectedUnit1 = 'Celsius';
   String selectedUnit2 = 'Fahrenheit';
 
-  TextEditingController temp1Controller = TextEditingController();
-  TextEditingController temp2Controller = TextEditingController();
+  String leftFieldValue = '';
+  String rightFieldValue = '';
 
-  var enteredValue = 0.0;
-  var convertedValue = 0.0;
+  String convertedValue = '';
 
   TemperatureConverterBloc(this.convertTemperatureUseCase)
       : super(TemperatureConverterInitial()) {
     on<ConvertTemperature>(_onConvertTemperature);
     on<UpdateUnit1>(_onUpdateUnit1);
     on<UpdateUnit2>(_onUpdateUnit2);
+    on<ResetFields>(_onResetFields);
   }
 
-  FutureOr<void> _onUpdateUnit1(
-      UpdateUnit1 event, Emitter<TemperatureConverterState> emit) {
+  _onUpdateUnit1(UpdateUnit1 event, Emitter<TemperatureConverterState> emit) {
     selectedUnit1 = event.unit;
-    emit(SelectedUnitsUpdated(
-      unit1: selectedUnit1,
-      unit2: selectedUnit2,
-    ));
+    emit(SelectedUnitsUpdated(unit1: selectedUnit1, unit2: selectedUnit2));
   }
 
-  FutureOr<void> _onUpdateUnit2(
-      UpdateUnit2 event, Emitter<TemperatureConverterState> emit) {
+  _onUpdateUnit2(UpdateUnit2 event, Emitter<TemperatureConverterState> emit) {
     selectedUnit2 = event.unit;
-    emit(SelectedUnitsUpdated(
-      unit1: selectedUnit1,
-      unit2: selectedUnit2,
-    ));
+    emit(SelectedUnitsUpdated(unit1: selectedUnit1, unit2: selectedUnit2));
   }
 
-  FutureOr<void> _onConvertTemperature(
-      ConvertTemperature event, Emitter<TemperatureConverterState> emit) {
-    final result = convertTemperatureUseCase(
-      value: event.value,
-      fromUnit: event.fromUnit,
-      toUnit: event.toUnit,
-    );
+  _onResetFields(ResetFields event, Emitter<TemperatureConverterState> emit) {
+    leftFieldValue = '';
+    rightFieldValue = '';
+    convertedValue = '';
+    emit(TemperatureConverterInitial());
+  }
 
-    enteredValue = event.value;
-    convertedValue = result.value;
+  _onConvertTemperature(
+      ConvertTemperature event, Emitter<TemperatureConverterState> emit) {
+    final result =
+        convertTemperatureUseCase(event.value, event.fromUnit, event.toUnit);
 
     if (event.conversionDirection == ConversionDirection.leftToRight) {
-      temp1Controller.text = enteredValue.toString();
-      temp2Controller.text = convertedValue.toString();
+      leftFieldValue = event.value.toString();
+      rightFieldValue = result.value.toString();
+
+      // Update converted value
+      convertedValue = rightFieldValue;
     } else {
-      temp1Controller.text = convertedValue.toString();
-      temp2Controller.text = enteredValue.toString();
+      leftFieldValue = result.value.toString();
+      rightFieldValue = event.value.toString();
+
+      // Update converted value
+      convertedValue = leftFieldValue;
     }
 
-    // emit(TemperatureConverterSuccess(field: event.field));
+    emit(TemperatureConverterSuccess(convertedValue));
   }
 }
