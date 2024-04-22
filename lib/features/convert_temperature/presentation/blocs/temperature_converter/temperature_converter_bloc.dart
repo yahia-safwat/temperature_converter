@@ -3,7 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../../core/enums/temperature_field.dart';
+import '../../../../../core/enums/conversion_direction.dart';
 import '../../../domain/usecases/convert_temperature_usecase.dart';
 
 part 'temperature_converter_event.dart';
@@ -60,7 +60,7 @@ class TemperatureConverterBloc
     enteredValue = event.value;
     convertedValue = result.value;
 
-    if (event.field == TemperatureField.leftToRight) {
+    if (event.conversionDirection == ConversionDirection.leftToRight) {
       temp1Controller.text = enteredValue.toString();
       temp2Controller.text = convertedValue.toString();
     } else {
@@ -68,6 +68,6 @@ class TemperatureConverterBloc
       temp2Controller.text = enteredValue.toString();
     }
 
-    emit(TemperatureConverterSuccess(field: event.field));
+    // emit(TemperatureConverterSuccess(field: event.field));
   }
 }

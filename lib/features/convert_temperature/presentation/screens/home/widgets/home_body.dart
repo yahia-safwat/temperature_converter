@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../../../core/enums/temperature_field.dart';
+import '../../../../../../core/enums/conversion_direction.dart';
 import '../../../blocs/temperature_converter/temperature_converter_bloc.dart';
 import '../../../widgets/custom_text_form_field.dart';
 import '../../../widgets/dropdown_item.dart';
@@ -43,7 +43,8 @@ class HomeBody extends StatelessWidget {
                               value: double.parse(value),
                               fromUnit: bloc.selectedUnit1,
                               toUnit: bloc.selectedUnit2,
-                              field: TemperatureField.leftToRight,
+                              conversionDirection:
+                                  ConversionDirection.leftToRight,
                             ));
                           },
                         ),
@@ -72,7 +73,8 @@ class HomeBody extends StatelessWidget {
                               value: double.parse(value),
                               fromUnit: bloc.selectedUnit2,
                               toUnit: bloc.selectedUnit1,
-                              field: TemperatureField.rightToLeft,
+                              conversionDirection:
+                                  ConversionDirection.rightToLeft,
                             ));
                           },
                         ),

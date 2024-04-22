@@ -16,12 +16,12 @@ class ConvertTemperature extends TemperatureConverterEvent {
   final double value;
   final String fromUnit;
   final String toUnit;
-  final TemperatureField field;
+  final ConversionDirection conversionDirection;
 
   ConvertTemperature({
     required this.value,
     required this.fromUnit,
     required this.toUnit,
-    required this.field,
+    required this.conversionDirection,
   });
 }
