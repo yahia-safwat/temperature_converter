@@ -21,6 +21,9 @@ class SelectedUnitsUpdated extends TemperatureConverterState {
 }
 
 class TemperatureConverterSuccess extends TemperatureConverterState {
+  final String convertedValue;
+
+  TemperatureConverterSuccess(this.convertedValue);
   @override
-  List<Object> get props => [];
+  List<Object> get props => [convertedValue];
 }

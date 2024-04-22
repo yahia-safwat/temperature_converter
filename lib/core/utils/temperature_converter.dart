@@ -1,5 +1,5 @@
 class TemperatureConverter {
-  static double convert(double value, String fromUnit, String toUnit) {
+  static num convert(num value, String fromUnit, String toUnit) {
     switch ('$fromUnit:$toUnit') {
       case 'Celsius:Fahrenheit':
         return (value * 9 / 5) + 32;

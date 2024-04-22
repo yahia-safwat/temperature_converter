@@ -13,7 +13,7 @@ class UpdateUnit2 extends TemperatureConverterEvent {
 }
 
 class ConvertTemperature extends TemperatureConverterEvent {
-  final double value;
+  final String value;
   final String fromUnit;
   final String toUnit;
   final ConversionDirection conversionDirection;
@@ -25,3 +25,5 @@ class ConvertTemperature extends TemperatureConverterEvent {
     required this.conversionDirection,
   });
 }
+
+class ResetFields extends TemperatureConverterEvent {}

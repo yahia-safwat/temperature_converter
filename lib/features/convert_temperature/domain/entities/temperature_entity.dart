@@ -1,5 +1,5 @@
 class TemperatureEntity {
-  final double value;
+  final num value;
   final String unit;
 
   TemperatureEntity(this.value, this.unit);

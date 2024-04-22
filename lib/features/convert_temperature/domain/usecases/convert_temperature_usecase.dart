@@ -6,11 +6,7 @@ class ConvertTemperatureUseCase {
 
   ConvertTemperatureUseCase({required this.repository});
 
-  TemperatureEntity call({
-    required double value,
-    required String fromUnit,
-    required String toUnit,
-  }) {
+  TemperatureEntity call(String value, String fromUnit, String toUnit) {
     final convertedTemperature =
         repository.convertTemperature(value, fromUnit, toUnit);
     return convertedTemperature;

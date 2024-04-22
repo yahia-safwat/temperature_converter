@@ -24,7 +24,7 @@ class CustomTextFormField extends StatelessWidget {
       ),
       child: TextFormField(
         controller: tempController,
-        keyboardType: TextInputType.number,
+        keyboardType: const TextInputType.numberWithOptions(decimal: true),
         onChanged: onChanged,
         decoration: InputStyles.customInputDecoration(
           border: InputBorder.none,
